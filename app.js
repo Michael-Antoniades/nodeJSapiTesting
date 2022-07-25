@@ -51,8 +51,9 @@ app.get('/profile', requiresAuth(), (req,res) => {
 
 app.get('/informationFetch', (req,res) => {
   res.send(profileInformation);
-  const userInformation = JSON.stringify(req.oidc.user);
+  //const userInformation = JSON.stringify(req.oidc.user);
   console.log('Information API Fetching: ' + userInformation);
+  console.log("test")
 });
 
 
