@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const dotenv = require('dotenv').config();
-const AWS = require('aws-sdk')
+const dotenv = require("dotenv").config();
+const AWS = require("aws-sdk")
+const mongoose = require("mongoose")
 
 
 const ID = process.env.AWS_ACCESS_KEY_ID
