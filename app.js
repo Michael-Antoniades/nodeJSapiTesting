@@ -15,6 +15,8 @@ const CLIENTSECRET = process.env.CLIENTSECRET
 const BASEURL = process.env.BASEURL
 
 const port = 3000;
+const userInformationService = require("./userInformationService")
+
 
 const config = {
   authRequired: false,
@@ -60,3 +62,6 @@ app.get('/informationFetch', (req,res) => {
 app.get('/test', (req,res) => {
   res.send("johnson and jonson")
 });
+
+
+app.use("/userInformation", userInformationService);
