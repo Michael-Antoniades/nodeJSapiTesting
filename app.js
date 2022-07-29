@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const { auth , requiresAuth } = require('express-openid-connect');
 var randomBytes = require('random-bytes');
+const path = require('path');
 
 const URI = process.env.DB_URI;
 const AUTHSECRET = process.env.AUTHSECRET
@@ -15,7 +16,8 @@ const CLIENTSECRET = process.env.CLIENTSECRET
 const BASEURL = process.env.BASEURL
 
 const port = 3000;
-const userInformationService = require("./userInformationService")
+const userInformationService = require("./userInformationService");
+const { response } = require('express');
 
 
 const config = {
@@ -61,6 +63,10 @@ app.get('/informationFetch', (req,res) => {
 
 app.get('/test', (req,res) => {
   res.send("johnson and jonson")
+});
+
+app.get('/' , (req,res) => {
+  res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 
