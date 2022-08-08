@@ -54,10 +54,9 @@ app.get('/profile', requiresAuth(), (req,res) => {
 });
 
 app.get('/informationFetch', (req,res) => {
+  const profileInformation = req.oidc.user;
   res.send(profileInformation);
   //const userInformation = JSON.stringify(req.oidc.user);
-  console.log('Information API Fetching: ' + userInformation);
-  console.log("test")
 });
 
 
@@ -69,5 +68,5 @@ app.get('/' , (req,res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
-
+app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
