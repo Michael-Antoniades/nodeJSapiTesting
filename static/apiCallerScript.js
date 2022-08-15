@@ -11,3 +11,15 @@ function myFunction() {
 
 }
 
+function newUserAdd() {
+  
+}
+
+
+
+// users.insert(user.nickname, function (err, inserted) { 
+//   client.close();
+
+//   if (err) return callback(err);
+//   callback(null);
+// });

@@ -46,7 +46,7 @@ app.listen(port, () => {
 });
 
 app.get('/profile', requiresAuth(), (req,res) => {
-  res.redirect(`http://localhost:3000/${req.oidc.user.nickname}`);
+  res.redirect(`http://localhost:3000/`);
   profileInformation = JSON.stringify(req.oidc.user);
   console.log(`profile API fetching: ${profileInformation}`);
 
