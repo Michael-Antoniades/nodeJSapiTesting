@@ -17,7 +17,35 @@
         placeholder = "Artist Name"
         name = "fileUpload" 
         />    
+            <br></br>   
+            
+        <div class = "fileContainer">
+        <div class = "songInput"> Mp3/Wav File For Upload* 
+        <br/>
+        <br/>
+        <input 
+        accept="audio/*" 
+        id="musicUpload"
+        type="file" 
+        ref = {audioRef}
+        />
+        </div> 
             <br></br>
+            <br></br>
+            
+    <div class = "imgInput"> jpg/jpeg/png for Upload*
+        <br></br>
+        <input 
+        accept="image/*" 
+        action = "/upload"
+        id="fileUpload"
+        type="file" 
+        ref = {imageRef} 
+        name = "imgUpload"
+    />
+    </div>
+    <br></br>
+    <br></br>
     </form>
 
     <p>Get User Dater</p>  
