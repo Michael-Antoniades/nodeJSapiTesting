@@ -17,7 +17,7 @@ const BASEURL = process.env.BASEURL
 
 const port = 3000;
 const userInformationService = require("./userInformationService");
-const userModelService = require("./userModel.js")
+const userModelService = require("./userModel.js");
 
 const { response } = require('express');
 
