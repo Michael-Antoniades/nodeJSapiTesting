@@ -1,3 +1,8 @@
+//   https://expressjs.com/en/guide/routing.html
+//Router = mini-application https://expressjs.com/en/4x/api.html#router
+// https://www.section.io/engineering-education/session-management-in-nodejs-using-expressjs-and-express-session/
+
+
 const http = require('http');
 const dotenv = require('dotenv').config();
 const express = require('express')
