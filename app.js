@@ -80,6 +80,11 @@ app.use("/userInformation", userInformationService);
 
 app.use("/userModel", userModelService);
 
+app.use("/static", express.static('./static/'));
+app.use("/userInformation", userInformationService);
+
+app.use("/userModel", userModelService);
+
 
 
 //s3://nextdaybeatsproductions/NextDayBeatsMedia/
