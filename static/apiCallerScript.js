@@ -6,7 +6,6 @@ function myFunction() {
         console.log(data);
         const dataString = JSON.stringify(data);
         document.getElementById('output').innerHTML = dataString;
-        console.log("Booo");
       });
 
 }

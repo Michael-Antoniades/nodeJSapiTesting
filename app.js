@@ -2,7 +2,6 @@
 //Router = mini-application https://expressjs.com/en/4x/api.html#router
 // https://www.section.io/engineering-education/session-management-in-nodejs-using-expressjs-and-express-session/
 
-
 const http = require('http');
 const dotenv = require('dotenv').config();
 const express = require('express')
@@ -25,6 +24,7 @@ const userInformationService = require("./userInformationService");
 const userModelService = require("./userModel.js");
 
 const { response } = require('express');
+const { nextTick } = require('process');
 
 
 const config = {
@@ -60,15 +60,24 @@ app.get('/profile', requiresAuth(), (req,res) => {
 
 });
 
-app.get('/informationFetch', (req,res) => {
-  const profileInformation = req.oidc.user;
-  res.send(profileInformation);
+app.get('/test', requiresAuth(), (req,res) => {
+  res.send("johnson and jonson")
+  console.log("Test Data displayed here: ");
+
+});
+
+app.get('/informationFetch', requiresAuth(),(req,res) => {
+  const profileInformation = JSON.stringify(req.oidc.user);
+  res.send(JSON.stringify(`hello ${profileInformation}`));
+  console.log("informationFetch hit")
+  console.log(profileInformation)
   //const userInformation = JSON.stringify(req.oidc.user);
 });
 
 
-app.get('/test', (req,res) => {
+app.get('/test', requiresAuth(),(req,res) => {
   res.send("johnson and jonson")
+  app.use("/userModel", userModelService);
 });
 
 app.get('/' , (req,res) => {
@@ -78,12 +87,13 @@ app.get('/' , (req,res) => {
 app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
 
-app.use("/userModel", userModelService);
+//app.use("/userModel", userModelService);
 
 app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
 
-app.use("/userModel", userModelService);
+
+//app.use("/userModel", userModelService);
 
 
 
