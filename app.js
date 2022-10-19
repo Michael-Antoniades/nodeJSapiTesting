@@ -10,6 +10,9 @@ const cors = require('cors');
 const { auth , requiresAuth } = require('express-openid-connect');
 var randomBytes = require('random-bytes');
 const path = require('path');
+const axios = require('axios');
+const qs = require('qs');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const URI = process.env.DB_URI;
 const AUTHSECRET = process.env.AUTHSECRET
@@ -60,10 +63,9 @@ app.get('/profile', requiresAuth(), (req,res) => {
 
 });
 
-app.get('/test', requiresAuth(), (req,res) => {
-  res.send("johnson and jonson")
-  console.log("Test Data displayed here: ");
-
+app.get('/test', (req,res) => {
+  console.log("Test Johnson displayed here: ");
+  getLogin();
 });
 
 app.get('/informationFetch', requiresAuth(),(req,res) => {
@@ -75,11 +77,6 @@ app.get('/informationFetch', requiresAuth(),(req,res) => {
 });
 
 
-app.get('/test', requiresAuth(),(req,res) => {
-  res.send("johnson and jonson")
-  app.use("/userModel", userModelService);
-});
-
 app.get('/' , (req,res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
@@ -87,13 +84,42 @@ app.get('/' , (req,res) => {
 app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
 
-//app.use("/userModel", userModelService);
 
 app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
 
 
-//app.use("/userModel", userModelService);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                             //
+//                                                                                             //
+//                               AWS Cognito APIs                                              //
+//                                                                                             //
+//                                                                                             //
+//                                                                                             //
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+let getLogin = async () => {  
+  // ${qs.stringify(parameters, { encode: false})}
+  let params = {
+    client_id: process.env.AWS_COGNITO_CLIENT_ID ,
+    response_type: process.env.AWS_COGNITO_RESPONSE_TYPE ,
+    scope: process.env.AWS_COGNITO_SCOPE ,
+    redirect_uri: process.env.AWS_COGNITO_REDIRECT_URI ,
+}    
+url = `https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?${qs.stringify(params, { encode: false})}`  
+url2 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&redirect_uri=http://localhost:3000/signedIn&scope=openid"
+url3 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?client_id=6p9l03ckllen5s65svcrba3h1a&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/signedIn"
+  //   await axios.request({
+  //   url3,
+  //   method: "get",
+  //  })
+  const res = await fetch(url3);
+  return res;
+
+}
+
+
 
 
 
