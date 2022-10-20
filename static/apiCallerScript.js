@@ -10,6 +10,18 @@ function myFunction() {
 
 }
 
+function myFunction2() {  
+  fetch('https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn').then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      console.log(data);
+      const dataString = JSON.stringify(data);
+      document.getElementById('output').innerHTML = dataString;
+    });
+
+}
+
+
 function newUserAdd() {
   
 }

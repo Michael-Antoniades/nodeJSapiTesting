@@ -40,7 +40,7 @@ const config = {
   clientSecret: CLIENTSECRET,
 }
 
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(express.urlencoded({limit: "30mb",extended:true}));
 app.use(auth(config));
@@ -63,9 +63,11 @@ app.get('/profile', requiresAuth(), (req,res) => {
 
 });
 
-app.get('/test', (req,res) => {
+app.use('/test', (req, res) => {
   console.log("Test Johnson displayed here: ");
-  getLogin();
+
+  res.redirect('https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn')
+  console.log("returns new url")
 });
 
 app.get('/informationFetch', requiresAuth(),(req,res) => {
@@ -78,6 +80,10 @@ app.get('/informationFetch', requiresAuth(),(req,res) => {
 
 
 app.get('/' , (req,res) => {
+  res.sendFile(path.join(__dirname+'/index.html'));
+});
+
+app.get('/signedIn' , (req,res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
@@ -109,13 +115,13 @@ let getLogin = async () => {
 }    
 url = `https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?${qs.stringify(params, { encode: false})}`  
 url2 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&redirect_uri=http://localhost:3000/signedIn&scope=openid"
-url3 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?client_id=6p9l03ckllen5s65svcrba3h1a&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/signedIn"
+url3 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn"
   //   await axios.request({
   //   url3,
   //   method: "get",
   //  })
-  const res = await fetch(url3);
-  return res;
+  console.log(url3)
+  return url3
 
 }
 
