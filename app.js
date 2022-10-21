@@ -63,12 +63,52 @@ app.get('/profile', requiresAuth(), (req,res) => {
 
 });
 
-app.use('/test', (req, res) => {
-  console.log("Test Johnson displayed here: ");
-
-  res.redirect('https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn')
+app.use('/test', (req, res, next) => {
+  console.log("Test URL displayed here: ");
+  const url = 'https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn';
+  axios.get({url: url,
+    })
+    .then(response => {
+        console.log(response)
+        res.send(response.code)
+      }).catch(err => {
+        console.log(err);
+        res.send({ err })
+      });
+  
+  
+  
   console.log("returns new url")
 });
+
+app.use('/getToken' , ( req, res) => {
+  myFunction2();
+})
+
+
+function myFunction2() { 
+  let code = '53e41b4d-f2f7-4ba0-bda7-828860e114e1';
+  console.log('requesting ID token');
+  url1 = 'https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/token?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn';
+  url2 = 'https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn';
+  axios.post({url: url2,
+  data: {
+    grant_type: "authorization_code",
+    code: code,
+    redirect_uri: "http://localhost:3000/signedIn",
+    client_id: process.env.AWS_COGNITO_CLIENT_ID,
+    client_secret: process.env.AWS_COGNITO_CLIENT_SECRET
+  }
+  })
+  .then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      console.log(data);
+      const dataString = JSON.stringify(data);
+      document.getElementById('output').innerHTML = dataString;
+    });
+
+}
 
 app.get('/informationFetch', requiresAuth(),(req,res) => {
   const profileInformation = JSON.stringify(req.oidc.user);

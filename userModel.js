@@ -40,10 +40,12 @@ console.log("userModel Initiated...")
 //https://stackoverflow.com/questions/11321635/nodejs-express-what-is-app-use
 // https://stackoverflow.com/questions/19696240/proper-way-to-return-json-using-node-or-express?rq=1
 
-app.get('/test', requiresAuth(), (req,res) => {
+app.get('/test', (req,res) => {
     res.send("johnson and jonson")
     console.log("Test Data displayed here: ");
   });
+
+
 
 // const s3 = new AWS.S3({
 //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
