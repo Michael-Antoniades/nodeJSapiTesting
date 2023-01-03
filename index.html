@@ -55,11 +55,23 @@
     <a href = "http://localhost:3000/informationFetch" value = "Display"> Login </a>
     <p id = "output" >user not logged in</p>
 
-    <p>Get Cognito Login</p>  
+    <p>Get Cognito Authorization</p>  
     <input type = "button" onClick = "myFunction2();" value = "Display_info_fetched_from_myFunction">
     <a href = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn"
     value = "Display"> Login </a>
-    <p id = "output" >user not logged in</p>
+    <p id = "output" >---------------</p>
+
+    <p>Get Cognito Login</p>  
+    <input type = "button" onClick = "myFunction2();" value = "Display_info_fetched_from_myFunction">
+    <a href = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http://localhost:3000/signedIn"
+    value = "Display"> Login </a>
+    <p id = "output" >------------------------</p>
+
+    <p>Get Cognito Logout</p>  
+    <input type = "button" onClick = "myFunction2();" value = "Display_info_fetched_from_myFunction">
+    <a href = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/logout?client_id=6p9l03ckllen5s65svcrba3h1a&logout_uri=http://localhost:3000/loggedOut"
+    value = "Display"> Logout </a>
+    <p id = "output" >--------------------------</p>
 
 </body>
 

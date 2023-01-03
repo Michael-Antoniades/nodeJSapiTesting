@@ -131,6 +131,10 @@ app.get('/signedIn' , (req,res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+app.get('/loggedOut' , (req,res) => {
+  res.sendFile(path.join(__dirname+'/index.html'));
+})
+
 app.use("/static", express.static('./static/'));
 app.use("/userInformation", userInformationService);
 
