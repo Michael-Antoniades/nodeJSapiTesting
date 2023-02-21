@@ -23,8 +23,9 @@ const CLIENTSECRET = process.env.CLIENTSECRET
 const BASEURL = process.env.BASEURL
 
 const port = 3000;
-const userInformationService = require("./userInformationService");
 const userModelService = require("./userModel.js");
+
+const S3_Service = require("./S3");
 
 const { response } = require('express');
 const { nextTick } = require('process');
@@ -114,13 +115,23 @@ function myFunction2() {
 
 }
 
-app.get('/informationFetch', requiresAuth(),(req,res) => {
-  const profileInformation = JSON.stringify(req.oidc.user);
-  res.send(JSON.stringify(`hello ${profileInformation}`));
-  console.log("informationFetch hit")
-  console.log(profileInformation)
+
+//////////////////////////////////////////////////////////////////////////////
+//                              STORAGE TESTING                             //
+//////////////////////////////////////////////////////////////////////////////
+app.get('/informationFetch',(req,res) => {
+  const emailTest = 'johngotti18@mail.com'
+  S3_Service.createFolder(emailTest);
   //const userInformation = JSON.stringify(req.oidc.user);
 });
+
+app.get('/checkIfFolderExists', (req, res) => {
+  const emailTest = 'johngotti18@mail.com'
+  S3_Service.checkIfFolderExists(emailTest);
+});
+
+
+
 
 
 app.get('/' , (req,res) => {
@@ -135,12 +146,7 @@ app.get('/loggedOut' , (req,res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 })
 
-app.use("/static", express.static('./static/'));
-app.use("/userInformation", userInformationService);
 
-
-app.use("/static", express.static('./static/'));
-app.use("/userInformation", userInformationService);
 
 
 
@@ -178,8 +184,6 @@ url3 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?r
 
 
 
-//s3://nextdaybeatsproductions/NextDayBeatsMedia/
-//Module for additional user information
 
 
 
@@ -189,82 +193,3 @@ url3 = "https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/authorize?r
 
 
 
-
-
-
-// POST https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FsignedIn
-// 302
-// Request Headers
-// Upgrade-Insecure-Requests: 1
-// Origin: https://nextdaybeats.auth.us-east-2.amazoncognito.com
-// Content-Type: application/x-www-form-urlencoded
-// User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Postman/10.0.1 Chrome/94.0.4606.81 Electron/15.5.7 Safari/537.36
-// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-// Sec-Fetch-Site: same-origin
-// Sec-Fetch-Mode: navigate
-// Sec-Fetch-User: ?1
-// Sec-Fetch-Dest: document
-// Referer: https://nextdaybeats.auth.us-east-2.amazoncognito.com/login?response_type=code&client_id=6p9l03ckllen5s65svcrba3h1a&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FsignedIn
-// Accept-Encoding: gzip, deflate, br
-// Accept-Language: en-US
-// Cookie: XSRF-TOKEN=64158faf-fedc-4994-948a-48d34169a680; csrf-state=""; csrf-state-legacy=""
-// Response Headers
-// cache-control: no-cache, no-store, max-age=0, must-revalidate
-// content-length: 0
-// date: Fri, 21 Oct 2022 17:49:00 GMT
-// location: http://localhost:3000/signedIn?code=18fe37c2-8eff-4886-98f4-abbc6a0753a6
-// pragma: no-cache
-// server: Server
-// set-cookie: XSRF-TOKEN=""; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; Secure; HttpOnly; SameSite=Lax
-// set-cookie: XSRF-TOKEN=865af007-ef59-4b12-9bbd-1610f9b222c2; Path=/; Secure; HttpOnly; SameSite=Lax
-// set-cookie: cognito="H4sIAAAAAAAAAAHnABj/ajUyoVr8yPCzhd2TPBi0RbTF/zfKgkhIzyyOX5WbhwK1sWy4EqG0HgZkEp0WXMPhS0gZz2ZYzd6z1Z/viWt1O4gWx7623BQX4zTMyIZbKIV6H0osqgTTX00sgi44WFEUPX8FmSdpDUtInZ8OjaoZ1EZ3OeS8Ij//X/UQSm/QRAEh47o8FKKuhWOU3BFUSl0bG7oN8NlHoXuo8gexrmZvkvQddyDLLEEUpt9U/k4mzP53j6oPVfdfwYWT0ZKoMogtCYC7hiS5s8RR5StjR5op2kGgrnPlq2i5dsNPZo8VuEQHgaVn2ro/2d5l1ecAAAA=.H4sIAAAAAAAAAFNuuz/38x4xgTeSvxxyVlgf8AiW874Un9gkffiMxJUKfTkAem9TxyAAAAA=.3"; Version=1; Domain=nextdaybeats.auth.us-east-2.amazoncognito.com; Max-Age=3600; Expires=Fri, 21-Oct-2022 18:49:00 GMT; Path=/; Secure; HttpOnly; SameSite=Lax
-// strict-transport-security: max-age=31536000 ; includeSubDomains
-// x-amz-cognito-request-id: d9f2fad1-8c33-4217-94f1-394549a8df97
-// x-content-type-options: nosniff
-// x-frame-options: DENY
-// x-xss-protection: 1; mode=block
-
-
-
-
-
-
- 
-// POST https://nextdaybeats.auth.us-east-2.amazoncognito.com/oauth2/token
-// 200
-// 361 ms
-// Network
-// Request Headers
-// Content-Type: application/x-www-form-urlencoded
-// User-Agent: PostmanRuntime/7.29.2
-// Accept: */*
-// Cache-Control: no-cache
-// Postman-Token: 98beb1df-ff82-4c03-a1e9-7fbf3d8bee65
-// Host: nextdaybeats.auth.us-east-2.amazoncognito.com
-// Accept-Encoding: gzip, deflate, br
-// Connection: keep-alive
-// Content-Length: 177
-// Request Body
-// grant_type: "authorization_code"
-// code: "18fe37c2-8eff-4886-98f4-abbc6a0753a6"
-// redirect_uri: "http://localhost:3000/signedIn"
-// client_id: "6p9l03ckllen5s65svcrba3h1a"
-// client_secret: ""
-// Response Headers
-// Date: Fri, 21 Oct 2022 17:49:01 GMT
-// Content-Type: application/json;charset=UTF-8
-// Transfer-Encoding: chunked
-// Connection: keep-alive
-// Set-Cookie: XSRF-TOKEN=a8c4bccd-059b-479e-8af4-f8aabaee22fe; Path=/; Secure; HttpOnly; SameSite=Lax
-// x-amz-cognito-request-id: 35792cbd-c697-4908-8837-2108079ab861
-// X-Application-Context: application:prod:8443
-// X-Content-Type-Options: nosniff
-// X-XSS-Protection: 1; mode=block
-// Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-// Pragma: no-cache
-// Expires: 0
-// Strict-Transport-Security: max-age=31536000 ; includeSubDomains
-// X-Frame-Options: DENY
-// Server: Server
-// Response Body
-// {"id_token":"eyJraWQiOiJPMWxpTE
