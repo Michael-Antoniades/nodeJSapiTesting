@@ -130,6 +130,11 @@ app.get('/checkIfFolderExists', (req, res) => {
   S3_Service.checkIfFolderExists(emailTest);
 });
 
+app.get('/getS3Object', (req, res) => {
+  const emailTest = 'johngotti18@mail.com'
+  S3_Service.getS3Object(emailTest);
+});
+
 
 
 

@@ -3,7 +3,7 @@
 //https://docs.aws.amazon.com/AmazonS3/latest/userguide/download-objects.html
 const multer = require('multer')
 const multerS3 = require('multer-s3');
-const {S3Client, PutObjectCommand, HeadObjectCommand} = require("@aws-sdk/client-s3");
+const {S3Client, PutObjectCommand, HeadObjectCommand, ListObjectsCommand, GetObjectCommand} = require("@aws-sdk/client-s3");
 
 
 //To-Do create a function and export for Data being added to folders,
@@ -134,8 +134,27 @@ const checkIfFolderExists = async(email) => {
 //     tokenVerify
 // }
 
+const getS3Object = async(email) => {
+  try {
+    // Retrieve a list of objects in the S3 bucket
+    const listObjectsParams = {
+      Bucket: BUCKET_NAME_3,
+      Prefix: 'johngotti18@mail.com/'
+    };
+
+    const { Contents } = await s3.send(new ListObjectsCommand(listObjectsParams));
+
+    // Find the specific object that you want to retrieve
+    //const object = Contents.find((obj) => obj.Key === OBJECT_KEY);
+    console.log(Contents);
+} catch (err) {
+  console.log("Error" , err);
+}
+}
+
 
 module.exports = {
     createFolder,
-    checkIfFolderExists
+    checkIfFolderExists,
+    getS3Object
 }
