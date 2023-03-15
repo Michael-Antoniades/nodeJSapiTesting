@@ -130,9 +130,16 @@ app.get('/checkIfFolderExists', (req, res) => {
   S3_Service.checkIfFolderExists(emailTest);
 });
 
+
+// const s3Start = async function()
+//https://stackoverflow.com/questions/49432579/await-is-only-valid-in-async-function
 app.get('/getS3Object', (req, res) => {
   const emailTest = 'johngotti18@mail.com'
   S3_Service.getS3Object(emailTest);
+  console.log(functionReturn);
+      // res.set("Content-Type", "image/jpeg");
+    // res.send(data.Body);
+    res.send('eggs');
 });
 
 

@@ -139,16 +139,20 @@ const getS3Object = async(email) => {
     // Retrieve a list of objects in the S3 bucket
     const listObjectsParams = {
       Bucket: BUCKET_NAME_3,
-      Prefix: 'johngotti18@mail.com/'
+      Prefix: 'johngotti18@mail.com/ig11.jpg'
     };
 
     const { Contents } = await s3.send(new ListObjectsCommand(listObjectsParams));
 
     // Find the specific object that you want to retrieve
     //const object = Contents.find((obj) => obj.Key === OBJECT_KEY);
-    console.log(Contents);
+
+    // res.set("Content-Type", "image/jpeg");
+    // res.send(data.Body);
+    return(Contents);
 } catch (err) {
   console.log("Error" , err);
+  return res.status(500).send("Error retrieving image from S3 bucket");
 }
 }
 
