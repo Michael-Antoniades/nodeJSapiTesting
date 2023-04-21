@@ -142,7 +142,13 @@ app.get('/getS3Object', (req, res) => {
     res.send('eggs');
 });
 
+app.get('/getS3ObjectPresign', async (req, res) => {
+  
+  const emailTest = 'johngotti18@mail.com';
+  const value = await S3_Service.getS3ObjectPresign()
+  console.log(value);
 
+});
 
 
 

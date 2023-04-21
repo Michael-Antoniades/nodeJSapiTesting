@@ -4,6 +4,7 @@
 const multer = require('multer')
 const multerS3 = require('multer-s3');
 const {S3Client, PutObjectCommand, HeadObjectCommand, ListObjectsCommand, GetObjectCommand} = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 
 //To-Do create a function and export for Data being added to folders,
@@ -156,9 +157,21 @@ const getS3Object = async(email) => {
 }
 }
 
+const getS3ObjectPresign = async(email) => {
+  try {
+  const getObjectCommand = new GetObjectCommand({ Bucket: BUCKET_NAME_3, Key: 'johngotti18@mail.com/ig11.jpg' });
+  const signedUrl = await getSignedUrl(s3, getObjectCommand, { expiresIn: 3600, isPublic: true });
+  return signedUrl;
+} catch (err) {
+  console.log("Error" , err);
+  return err;
+  }
+}
+
 
 module.exports = {
     createFolder,
     checkIfFolderExists,
-    getS3Object
+    getS3Object,
+    getS3ObjectPresign
 }
