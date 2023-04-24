@@ -1,5 +1,10 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose');
+//https://www.npmjs.com/package/mongoose
+
+
 //npm install mongodb
+//npm install mongoose
 //const userModel_Service = require("./userModel.js");
 
 const uri = process.env.MONGO_URI;
@@ -61,8 +66,6 @@ async function createUser(s3_transfer) {
     throw err;
   }
 }
-
-
 module.exports = {
   run
 }

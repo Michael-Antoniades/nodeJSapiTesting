@@ -7,6 +7,7 @@ const {S3Client, PutObjectCommand, HeadObjectCommand, ListObjectsCommand, GetObj
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 
+
 //To-Do create a function and export for Data being added to folders,
 // example data transmission: https://github.com/bobboy65/Beat-Website-Production-Build/blob/main/src/pages/Upload.js
 
@@ -15,6 +16,8 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 //////////////////////////////////////////////////////////////////////////////
 //                              STORAGE                                     //
 //////////////////////////////////////////////////////////////////////////////
+
+
 
 // var upload = multer({    
 //     storage: multerS3({
@@ -43,6 +46,7 @@ var s3 = new S3Client({
   secretAccessKey: SECRET,
   Bucket: BUCKET_NAME_3
 })
+
 
 const createFolder = async(email) => {
   const params = {
