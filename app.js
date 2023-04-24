@@ -23,9 +23,9 @@ const CLIENTSECRET = process.env.CLIENTSECRET
 const BASEURL = process.env.BASEURL
 
 const port = 3000;
-const userModelService = require("./userModel.js");
-
+const userModel_Service = require("./userModel.js");
 const S3_Service = require("./S3");
+
 
 const { response } = require('express');
 const { nextTick } = require('process');
@@ -77,11 +77,7 @@ app.use('/test', (req, res, next) => {
   //       res.send({ err })
   //     });
   res.redirect(url);
-  console.log()
-
-
-  
-  
+  console.log();
   
   console.log("returns new url")
 });
@@ -133,22 +129,32 @@ app.get('/checkIfFolderExists', (req, res) => {
 
 // const s3Start = async function()
 //https://stackoverflow.com/questions/49432579/await-is-only-valid-in-async-function
-app.get('/getS3Object', (req, res) => {
+app.get('/getS3Object', async (req, res) => {
   const emailTest = 'johngotti18@mail.com'
-  S3_Service.getS3Object(emailTest);
-  console.log(functionReturn);
+  const value = await S3_Service.getS3Object(emailTest);
       // res.set("Content-Type", "image/jpeg");
     // res.send(data.Body);
-    res.send('eggs');
+    res.send(value);
 });
 
 app.get('/getS3ObjectPresign', async (req, res) => {
   
   const emailTest = 'johngotti18@mail.com';
   const value = await S3_Service.getS3ObjectPresign()
-  console.log(value);
+  res.send(value);
 
 });
+
+app.get('/userModelRun' , async (req,res) => {
+  const value = await userModel_Service.run()
+  console.log(value);
+});
+
+
+
+
+
+
 
 
 

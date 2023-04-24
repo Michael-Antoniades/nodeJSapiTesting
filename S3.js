@@ -139,8 +139,8 @@ const getS3Object = async(email) => {
   try {
     // Retrieve a list of objects in the S3 bucket
     const listObjectsParams = {
-      Bucket: BUCKET_NAME_3,
-      Prefix: 'johngotti18@mail.com/ig11.jpg'
+      Bucket: BUCKET_NAME_3
+      // Prefix: 'johngotti18@mail.com/ig11.jpg'
     };
 
     const { Contents } = await s3.send(new ListObjectsCommand(listObjectsParams));
